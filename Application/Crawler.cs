@@ -6,8 +6,11 @@ using System.Text;
 
 namespace Application
 {
-    class Crawler
+    public class Crawler
     {
+        public delegate void DownloadingEventHandler(object sender, DownloadingEventArgs e);
+        public event DownloadingEventHandler DownloadingEvent;
+
         private int currentFileIndex;
         public string Seed { get; set; }
         public int MaxNbrOfLinks { get; set; }
@@ -81,10 +84,18 @@ namespace Application
 
         private string Download(WebClient wc, string url)
         {
+            OnDownload(new DownloadingEventArgs(url));
+
             string page = wc.DownloadString(url);
-            string filePath = string.Format("{0}/{1}{2}.html", Config.filesDirectory, Config.filesPrefix, currentFileIndex);
+            string filePath = string.Format("{0}/{1}{2}.html", Config.filesDirectory, Config.filesPrefix, currentFileIndex++);
             File.WriteAllText(filePath, page);
             return page;
+        }
+
+        private void OnDownload(DownloadingEventArgs e)
+        {
+            if (DownloadingEvent != null)
+                DownloadingEvent(this, e);
         }
 
         private void SetProxy(WebClient wc)
@@ -125,4 +136,14 @@ namespace Application
             }
         }
     }
+
+    public class DownloadingEventArgs : EventArgs
+    {
+        public DownloadingEventArgs(string url)
+        {
+            Url = url;
+        }
+        public string Url { get; }
+    }
+
 }
