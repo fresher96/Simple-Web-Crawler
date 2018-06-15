@@ -50,14 +50,14 @@
             this.txtNbr.Location = new System.Drawing.Point(156, 12);
             this.txtNbr.Name = "txtNbr";
             this.txtNbr.Size = new System.Drawing.Size(168, 20);
-            this.txtNbr.TabIndex = 1;
+            this.txtNbr.TabIndex = 0;
             // 
             // btnClear
             // 
             this.btnClear.Location = new System.Drawing.Point(52, 83);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
-            this.btnClear.TabIndex = 2;
+            this.btnClear.TabIndex = 3;
             this.btnClear.Text = "Clear Files";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);

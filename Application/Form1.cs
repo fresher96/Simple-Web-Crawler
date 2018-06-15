@@ -32,7 +32,9 @@ namespace Application
         private void btnCrawl_Click(object sender, EventArgs e)
         {
             if (!Directory.Exists(Config.filesDirectory))
+            {
                 Directory.CreateDirectory(Config.filesDirectory);
+            }
 
             Crawler crawler = new Crawler(txtSeed.Text, int.Parse(txtNbr.Text));
             crawler.Crawl();
