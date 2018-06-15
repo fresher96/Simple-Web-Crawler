@@ -92,7 +92,15 @@ namespace Application
             string page = "";
             try
             {
-                page = wc.DownloadString(url);
+                //page = wc.DownloadString(url);
+
+                byte[] data = wc.DownloadData(url);
+                string contentType = wc.ResponseHeaders[HttpResponseHeader.ContentType];
+
+                // some links may be for downloading (e.g. PDF files)
+                if (!contentType.StartsWith("text/html")) throw new Exception();
+                
+                page = Encoding.UTF8.GetString(data);
                 string filePath = string.Format("{0}/{1}{2}.html", Config.filesDirectory, Config.filesPrefix, currentFileIndex++);
                 File.WriteAllText(filePath, page);
             }

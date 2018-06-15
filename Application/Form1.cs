@@ -63,7 +63,7 @@ namespace Application
 
         private void crawler_Downloading(object sender, Crawler.DownloadingEventArgs e)
         {
-            //txtLog.Text += string.Format("\r\nDownloading {1}:\r\n{0}\r\n", e.Url, fileCounter++);
+            txtLog.Text += string.Format("\r\nDownloading {1}:\r\n{0}\r\n", e.Url, fileCounter++);
         }
 
         private void chkProxy_CheckedChanged(object sender, EventArgs e)

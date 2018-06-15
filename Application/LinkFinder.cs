@@ -30,6 +30,9 @@ namespace Application
         {
             List<LinkItem> list = new List<LinkItem>();
 
+            // regex takes forever to parse longer files
+            if (file.Length > Config.MaxAllowedFileLength) return list;
+
             // 1.
             // Find all matches in file.
             MatchCollection m1 = Regex.Matches(file, @"(<a.*?>.*?</a>)",
