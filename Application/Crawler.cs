@@ -1,6 +1,7 @@
 ﻿using System.Net;
 using System.IO;
 using System.Collections.Generic;
+using System;
 
 namespace Application
 {
@@ -8,28 +9,17 @@ namespace Application
     {
         public string Seed { get; set; }
         public int MaxNbrOfLinks { get; set; }
+        public NetworkCredential Credentials { get; set; }
         public Crawler(string seed, int maxNbrOfLinks)
         {
             Seed = seed;
             MaxNbrOfLinks = maxNbrOfLinks;
+            Credentials = null;
         }
 
         public void Crawl()
         {
-            using (WebClient wc = new WebClient())
-            {
-                wc.Proxy = new WebProxy(Config.proxyIp, Config.proxyPort);
-                wc.Proxy.Credentials = new NetworkCredential()
-                {
-                    UserName = Config.proxyUserName,
-                    Password = Config.proxyPassword,
-                };
-
-                string page = wc.DownloadString(Seed);
-                string file = Config.filesDirectory + "/f.txt";
-                //File.Create(file);
-                File.WriteAllText(file, page);
-            }
+            RunTest();
 
             HashSet<string> visited = new HashSet<string>();
             Queue<string> queue = new Queue<string>();
@@ -41,6 +31,22 @@ namespace Application
             //while(counter < MaxNbrOfLinks && queue.Count > 0)
             {
                 
+            }
+        }
+
+        private void RunTest()
+        {
+            using (WebClient wc = new WebClient())
+            {
+                if(Credentials != null)
+                {
+                    wc.Proxy = new WebProxy(Config.proxyIp, Config.proxyPort);
+                    wc.Proxy.Credentials = Credentials;
+                }
+
+                string page = wc.DownloadString(Seed);
+                string file = Config.filesDirectory + "/f.html";
+                File.WriteAllText(file, page);
             }
         }
     }

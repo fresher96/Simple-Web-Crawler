@@ -22,6 +22,8 @@ namespace Application
         {
             txtSeed.Text = Config.seed;
             txtNbr.Text = Config.maxNbrOfLinks.ToString();
+            txtUserName.Text = Config.proxyUserName;
+            txtPassword.Text = Config.proxyPassword;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -36,8 +38,19 @@ namespace Application
                 Directory.CreateDirectory(Config.filesDirectory);
             }
 
+
             Crawler crawler = new Crawler(txtSeed.Text, int.Parse(txtNbr.Text));
+
+            // comment this if you don't want to use the proxy
+            crawler.Credentials = new System.Net.NetworkCredential
+            {
+                UserName = txtUserName.Text,
+                Password = txtPassword.Text,
+            };
+
             crawler.Crawl();
+
+            MessageBox.Show("Finished crawling", "Notification");
         }
     }
 }

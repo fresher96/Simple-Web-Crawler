@@ -34,12 +34,16 @@
             this.btnCrawl = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.txtSeed = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.txtUserName = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.txtPassword = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(49, 15);
+            this.label1.Location = new System.Drawing.Point(49, 41);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(101, 13);
             this.label1.TabIndex = 0;
@@ -47,27 +51,27 @@
             // 
             // txtNbr
             // 
-            this.txtNbr.Location = new System.Drawing.Point(156, 12);
+            this.txtNbr.Location = new System.Drawing.Point(156, 38);
             this.txtNbr.Name = "txtNbr";
             this.txtNbr.Size = new System.Drawing.Size(168, 20);
             this.txtNbr.TabIndex = 0;
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(52, 83);
+            this.btnClear.Location = new System.Drawing.Point(52, 139);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
-            this.btnClear.TabIndex = 3;
+            this.btnClear.TabIndex = 4;
             this.btnClear.Text = "Clear Files";
             this.btnClear.UseVisualStyleBackColor = true;
             this.btnClear.Click += new System.EventHandler(this.btnClear_Click);
             // 
             // btnCrawl
             // 
-            this.btnCrawl.Location = new System.Drawing.Point(249, 83);
+            this.btnCrawl.Location = new System.Drawing.Point(249, 139);
             this.btnCrawl.Name = "btnCrawl";
             this.btnCrawl.Size = new System.Drawing.Size(75, 23);
-            this.btnCrawl.TabIndex = 2;
+            this.btnCrawl.TabIndex = 3;
             this.btnCrawl.Text = "Crawl";
             this.btnCrawl.UseVisualStyleBackColor = true;
             this.btnCrawl.Click += new System.EventHandler(this.btnCrawl_Click);
@@ -75,7 +79,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(120, 41);
+            this.label2.Location = new System.Drawing.Point(120, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(30, 13);
             this.label2.TabIndex = 0;
@@ -83,20 +87,56 @@
             // 
             // txtSeed
             // 
-            this.txtSeed.Location = new System.Drawing.Point(156, 38);
+            this.txtSeed.Location = new System.Drawing.Point(156, 12);
             this.txtSeed.Name = "txtSeed";
             this.txtSeed.Size = new System.Drawing.Size(168, 20);
-            this.txtSeed.TabIndex = 1;
+            this.txtSeed.TabIndex = 5;
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(66, 67);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(84, 13);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "proxy user name";
+            // 
+            // txtUserName
+            // 
+            this.txtUserName.Location = new System.Drawing.Point(156, 64);
+            this.txtUserName.Name = "txtUserName";
+            this.txtUserName.Size = new System.Drawing.Size(168, 20);
+            this.txtUserName.TabIndex = 1;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(70, 93);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(80, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "proxy password";
+            // 
+            // txtPassword
+            // 
+            this.txtPassword.Location = new System.Drawing.Point(156, 90);
+            this.txtPassword.Name = "txtPassword";
+            this.txtPassword.Size = new System.Drawing.Size(168, 20);
+            this.txtPassword.TabIndex = 2;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(378, 129);
+            this.ClientSize = new System.Drawing.Size(378, 188);
             this.Controls.Add(this.btnCrawl);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.txtSeed);
             this.Controls.Add(this.label2);
+            this.Controls.Add(this.txtPassword);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.txtUserName);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.txtNbr);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
@@ -115,6 +155,10 @@
         private System.Windows.Forms.Button btnCrawl;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtSeed;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox txtUserName;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox txtPassword;
     }
 }
 
