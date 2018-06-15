@@ -48,7 +48,15 @@ namespace Application
                 Password = txtPassword.Text,
             };
 
-            crawler.Crawl();
+
+            try
+            {
+                crawler.Crawl();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
 
             MessageBox.Show("Finished crawling", "Notification");
         }

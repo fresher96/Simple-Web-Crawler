@@ -13,7 +13,7 @@ namespace Application
 
         public const int maxNbrOfLinks = 80;
         public const string filesDirectory = "../../files";
-        public const string proxyIp = "proxy.hiast.edu.sy";
+        public const string proxyIp = "172.25.1.151";
         public const int proxyPort = 8080;
         public const string proxyUserName = "farouk.hjabo";
         public const string proxyPassword = "1234.qwer";
