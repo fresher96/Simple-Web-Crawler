@@ -8,10 +8,8 @@ namespace Application
 {
     public class Crawler
     {
-        public delegate void DownloadingEventHandler(object sender, DownloadingEventArgs e);
-        public event DownloadingEventHandler DownloadingEvent;
-
-        private int currentFileIndex;
+        public int currentFileIndex;
+        public int noOfErrors;
         public string Seed { get; set; }
         public int MaxNbrOfLinks { get; set; }
         public NetworkCredential Credentials { get; set; }
@@ -23,8 +21,10 @@ namespace Application
             currentFileIndex = 0;
         }
 
-        public void Crawl()
+
+        public int Crawl()
         {
+            noOfErrors = 0;
             using (WebClient wc = new WebClient())
             {
                 SetProxy(wc);
@@ -57,6 +57,8 @@ namespace Application
                     }
                 }
             }
+
+            return noOfErrors;
         }
 
         private string GetNewUrl(string url, string link)
@@ -86,13 +88,22 @@ namespace Application
         {
             OnDownload(new DownloadingEventArgs(url));
 
-            string page = wc.DownloadString(url);
-            string filePath = string.Format("{0}/{1}{2}.html", Config.filesDirectory, Config.filesPrefix, currentFileIndex++);
-            File.WriteAllText(filePath, page);
+            string page = "";
+            try
+            {
+                page = wc.DownloadString(url);
+                string filePath = string.Format("{0}/{1}{2}.html", Config.filesDirectory, Config.filesPrefix, currentFileIndex++);
+                File.WriteAllText(filePath, page);
+            }
+            catch (Exception)
+            {
+                noOfErrors++;
+            }
+
             return page;
         }
 
-        private void OnDownload(DownloadingEventArgs e)
+        protected void OnDownload(DownloadingEventArgs e)
         {
             if (DownloadingEvent != null)
                 DownloadingEvent(this, e);
@@ -135,15 +146,21 @@ namespace Application
                 }
             }
         }
-    }
 
-    public class DownloadingEventArgs : EventArgs
-    {
-        public DownloadingEventArgs(string url)
+
+        /// <summary>
+        /// DownloadingEvent definitions
+        /// </summary>
+        public class DownloadingEventArgs : EventArgs
         {
-            Url = url;
+            public DownloadingEventArgs(string url)
+            {
+                Url = url;
+            }
+            public string Url { get; }
         }
-        public string Url { get; }
+        public delegate void DownloadingEventHandler(object sender, DownloadingEventArgs e);
+        public event DownloadingEventHandler DownloadingEvent;
     }
 
 }

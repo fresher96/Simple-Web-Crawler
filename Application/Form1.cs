@@ -53,20 +53,15 @@ namespace Application
             }
 
             crawler.DownloadingEvent += new Crawler.DownloadingEventHandler(crawler_Downloading);
+            int errors = crawler.Crawl();
 
 
-            try
-            {
-                crawler.Crawl();
-                MessageBox.Show("Finished crawling", "Notification");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message, "Exception");
-            }
+            string msg = "Finished crawling\r\n";
+            msg += string.Format("couldn't download {0} pages", errors);
+            MessageBox.Show(msg, "Notification");
         }
 
-        private void crawler_Downloading(object sender, DownloadingEventArgs e)
+        private void crawler_Downloading(object sender, Crawler.DownloadingEventArgs e)
         {
             txtLog.Text += string.Format("\r\nDownloading {1}:\r\n{0}\r\n", e.Url, fileCounter++);
         }
