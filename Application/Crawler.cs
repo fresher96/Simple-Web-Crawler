@@ -49,6 +49,11 @@ namespace Application
                 string page = wc.DownloadString(Seed);
                 string file = Config.filesDirectory + "/f.html";
                 File.WriteAllText(file, page);
+
+                foreach (LinkItem i in LinkFinder.Find(page))
+                {
+                    string s = i.ToString();
+                }
             }
         }
     }
