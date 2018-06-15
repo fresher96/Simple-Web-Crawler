@@ -30,17 +30,17 @@ namespace Application
 
         private void btnClear_Click(object sender, EventArgs e)
         {
-            Directory.Delete(Config.filesDirectory, true);
             txtLog.Clear();
+
+            DirectoryInfo filesDirectory = new DirectoryInfo(Config.filesDirectory);
+            foreach (FileInfo file in filesDirectory.EnumerateFiles())
+            {
+                file.Delete();
+            }
         }
 
         private void btnCrawl_Click(object sender, EventArgs e)
         {
-            if (!Directory.Exists(Config.filesDirectory))
-            {
-                Directory.CreateDirectory(Config.filesDirectory);
-            }
-
             Crawler crawler = new Crawler(txtSeed.Text, int.Parse(txtNbr.Text));
             crawler.FilesPrefix = txtPrefix.Text;
             if(!chkProxy.Checked)
@@ -55,11 +55,10 @@ namespace Application
             fileCounter = 0;
             crawler.DownloadingEvent += new Crawler.DownloadingEventHandler(crawler_Downloading);
             crawler.Crawl();
-            crawler.Crawl();
 
             string msg = "Finished crawling\r\n";
-            msg += string.Format("couldn't download {0} pages\r\n", crawler.NoOfErrors);
-            msg += string.Format("from a total of {0} pages", crawler.CurrentFileIndex);
+            msg += string.Format("couldn't download {0} page(s)\r\n", crawler.NoOfErrors);
+            msg += string.Format("from a total of {0} page(s)", crawler.CurrentFileIndex);
             MessageBox.Show(msg, "Notification");
         }
 
