@@ -40,25 +40,31 @@ namespace Application
 
 
             Crawler crawler = new Crawler(txtSeed.Text, int.Parse(txtNbr.Text));
-
-            // comment this if you don't want to use the proxy
-            crawler.Credentials = new System.Net.NetworkCredential
+            if(!chkProxy.Checked)
             {
-                UserName = txtUserName.Text,
-                Password = txtPassword.Text,
-            };
-
+                crawler.Credentials = new System.Net.NetworkCredential
+                {
+                    UserName = txtUserName.Text,
+                    Password = txtPassword.Text,
+                };
+            }
+            
 
             try
             {
                 crawler.Crawl();
+                MessageBox.Show("Finished crawling", "Notification");
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                MessageBox.Show(ex.Message, "Exception");
             }
+        }
 
-            MessageBox.Show("Finished crawling", "Notification");
+        private void chkProxy_CheckedChanged(object sender, EventArgs e)
+        {
+            txtUserName.Enabled = !txtUserName.Enabled;
+            txtPassword.Enabled = !txtPassword.Enabled;
         }
     }
 }

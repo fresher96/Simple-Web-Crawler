@@ -38,6 +38,7 @@
             this.txtUserName = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
+            this.chkProxy = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -58,7 +59,7 @@
             // 
             // btnClear
             // 
-            this.btnClear.Location = new System.Drawing.Point(52, 139);
+            this.btnClear.Location = new System.Drawing.Point(52, 147);
             this.btnClear.Name = "btnClear";
             this.btnClear.Size = new System.Drawing.Size(75, 23);
             this.btnClear.TabIndex = 4;
@@ -68,7 +69,7 @@
             // 
             // btnCrawl
             // 
-            this.btnCrawl.Location = new System.Drawing.Point(249, 139);
+            this.btnCrawl.Location = new System.Drawing.Point(249, 147);
             this.btnCrawl.Name = "btnCrawl";
             this.btnCrawl.Size = new System.Drawing.Size(75, 23);
             this.btnCrawl.TabIndex = 3;
@@ -125,11 +126,23 @@
             this.txtPassword.Size = new System.Drawing.Size(168, 20);
             this.txtPassword.TabIndex = 2;
             // 
+            // chkProxy
+            // 
+            this.chkProxy.AutoSize = true;
+            this.chkProxy.Location = new System.Drawing.Point(156, 116);
+            this.chkProxy.Name = "chkProxy";
+            this.chkProxy.Size = new System.Drawing.Size(97, 17);
+            this.chkProxy.TabIndex = 6;
+            this.chkProxy.Text = "don\'t use proxy";
+            this.chkProxy.UseVisualStyleBackColor = true;
+            this.chkProxy.CheckedChanged += new System.EventHandler(this.chkProxy_CheckedChanged);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(378, 188);
+            this.Controls.Add(this.chkProxy);
             this.Controls.Add(this.btnCrawl);
             this.Controls.Add(this.btnClear);
             this.Controls.Add(this.txtSeed);
@@ -141,7 +154,7 @@
             this.Controls.Add(this.txtNbr);
             this.Controls.Add(this.label1);
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "Crawler Demo";
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -160,6 +173,7 @@
         private System.Windows.Forms.TextBox txtUserName;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtPassword;
+        private System.Windows.Forms.CheckBox chkProxy;
     }
 }
 

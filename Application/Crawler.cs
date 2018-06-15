@@ -37,39 +37,18 @@ namespace Application
 
         private void RunTest()
         {
+            WebRequest.DefaultWebProxy = null;
             using (WebClient wc = new WebClient())
             {
-                if(Credentials == null)
-                {
-                    wc.Proxy = null;
-                }
-                else
+                if (Credentials != null)
                 {
                     wc.Proxy = new WebProxy(Config.proxyIp, Config.proxyPort);
-                    //wc.Proxy.Credentials = Credentials;
-                    //wc.UseDefaultCredentials = false;
-                    //wc.Proxy.Credentials = false;
-
-
-                    //string credentials;
-                    //credentials = string.Format("{0}:{1}", Credentials.UserName, Credentials.Password);
-                    //credentials = Convert.ToBase64String(Encoding.UTF8.GetBytes(credentials));
-                    ////wc.Headers[HttpRequestHeader.ProxyAuthorization] = string.Format("Basic {0}", credentials);
-                    //wc.Headers.Add("Proxy-Authorization", string.Format("Basic {0}", credentials));
-
-                    //wc.Headers.Add("Cache-Control", "no-cache");
-                    wc.Headers.Add("Proxy-Authorization", "Digest username=\"farouk.hjabo\", password=\"1234.qwer\"");
+                    wc.Proxy.Credentials = Credentials;
                 }
-
-                //var tmp = wc.Headers;
 
                 string page = wc.DownloadString(Seed);
                 string file = Config.filesDirectory + "/f.html";
                 File.WriteAllText(file, page);
-
-                //wc.Proxy.Credentials = null;
-
-                
             }
         }
     }
