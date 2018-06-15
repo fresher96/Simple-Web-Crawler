@@ -66,5 +66,10 @@ namespace Application
             txtUserName.Enabled = !txtUserName.Enabled;
             txtPassword.Enabled = !txtPassword.Enabled;
         }
+
+        public TextBox GetLog()
+        {
+            return txtLog;
+        }
     }
 }

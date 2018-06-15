@@ -18,7 +18,8 @@ namespace Application
             {
                 System.Windows.Forms.Application.EnableVisualStyles();
                 System.Windows.Forms.Application.SetCompatibleTextRenderingDefault(false);
-                System.Windows.Forms.Application.Run(new Form1());
+                Form1 from = new Form1();
+                System.Windows.Forms.Application.Run(from);
             }
             catch (Exception ex)
             {

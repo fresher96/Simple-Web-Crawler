@@ -39,6 +39,9 @@
             this.label4 = new System.Windows.Forms.Label();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.chkProxy = new System.Windows.Forms.CheckBox();
+            this.txtLog = new System.Windows.Forms.TextBox();
+            this.grpLog = new System.Windows.Forms.GroupBox();
+            this.grpLog.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
@@ -137,11 +140,31 @@
             this.chkProxy.UseVisualStyleBackColor = true;
             this.chkProxy.CheckedChanged += new System.EventHandler(this.chkProxy_CheckedChanged);
             // 
+            // txtLog
+            // 
+            this.txtLog.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.txtLog.Location = new System.Drawing.Point(3, 16);
+            this.txtLog.Multiline = true;
+            this.txtLog.Name = "txtLog";
+            this.txtLog.Size = new System.Drawing.Size(348, 150);
+            this.txtLog.TabIndex = 7;
+            // 
+            // grpLog
+            // 
+            this.grpLog.Controls.Add(this.txtLog);
+            this.grpLog.Location = new System.Drawing.Point(12, 176);
+            this.grpLog.Name = "grpLog";
+            this.grpLog.Size = new System.Drawing.Size(354, 169);
+            this.grpLog.TabIndex = 8;
+            this.grpLog.TabStop = false;
+            this.grpLog.Text = "Log";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(378, 188);
+            this.ClientSize = new System.Drawing.Size(378, 357);
+            this.Controls.Add(this.grpLog);
             this.Controls.Add(this.chkProxy);
             this.Controls.Add(this.btnCrawl);
             this.Controls.Add(this.btnClear);
@@ -156,6 +179,8 @@
             this.Name = "Form1";
             this.Text = "Crawler Demo";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.grpLog.ResumeLayout(false);
+            this.grpLog.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -174,6 +199,8 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.CheckBox chkProxy;
+        private System.Windows.Forms.TextBox txtLog;
+        private System.Windows.Forms.GroupBox grpLog;
     }
 }
 
