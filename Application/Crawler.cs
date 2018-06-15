@@ -99,20 +99,25 @@ namespace Application
             string page = "";
             try
             {
+                // doesn't handle arabic characters
                 //page = wc.DownloadString(url);
 
                 byte[] data = wc.DownloadData(url);
                 string contentType = wc.ResponseHeaders[HttpResponseHeader.ContentType];
 
                 // some links may be for downloading (e.g. PDF files)
-                if (!contentType.StartsWith("text/html")) throw new Exception();
+                if (!contentType.Contains("text/html")) throw new Exception();
                 
                 page = Encoding.UTF8.GetString(data);
                 string filePath = string.Format("{0}/{1}{2}.html", Config.filesDirectory, FilesPrefix, currentFileIndex);
                 File.WriteAllText(filePath, page);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                if (ex.Message.Contains("(407) Proxy Authentication Required"))
+                {
+                    throw new Exception(ex.Message + "\r\nCheck your credentials.");
+                }
                 noOfErrors++;
             }
 
