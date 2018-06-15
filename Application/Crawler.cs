@@ -34,6 +34,7 @@ namespace Application
 
                 int counter = 0;
                 string url = Seed;
+                visited.Add("");
                 visited.Add(url);
                 queue.Enqueue(url);
                 counter++;
@@ -63,7 +64,7 @@ namespace Application
 
         private string GetNewUrl(string url, string link)
         {
-            string newUrl = null;
+            string newUrl = "";
             foreach (string pattern in Config.absoluteLinkPatterns)
             {
                 if (link.StartsWith(pattern))
@@ -74,9 +75,9 @@ namespace Application
                 }
             }
 
-            if (newUrl == null)
+            if (newUrl == "" && !link.StartsWith("#"))
             {
-                newUrl = url;
+                newUrl = "http://" + new Uri(url).Host;
                 if (!link.StartsWith("/")) newUrl += "/";
                 newUrl += link;
             }

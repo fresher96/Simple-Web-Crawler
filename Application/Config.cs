@@ -8,11 +8,11 @@ namespace Application
 {
     public static class Config
     {
-        //public const string seed = "https://eclass.hiast.edu.sy/";
+        public const string seed = "https://eclass.hiast.edu.sy/";
         //public const string seed = "https://google.com/";
-        public const string seed = "http://en.wikipedia.org/wiki/Main_Page";
+        //public const string seed = "http://en.wikipedia.org/wiki/Main_Page";
 
-        public const int maxNbrOfLinks = 5; // should be >= 1
+        public const int maxNbrOfLinks = 8; // should be >= 1
 
         public const string filesDirectory = "../../files";
         public const string filesPrefix = "file_";
