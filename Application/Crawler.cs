@@ -64,6 +64,7 @@ namespace Application
                 if (link.StartsWith(pattern))
                 {
                     newUrl = link;
+                    if (link == "//") newUrl = "http:" + newUrl;
                     break;
                 }
             }
