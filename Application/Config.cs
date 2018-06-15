@@ -12,7 +12,7 @@ namespace Application
         //public const string seed = "https://google.com/";
         public const string seed = "http://en.wikipedia.org/wiki/Main_Page";
 
-        public const int maxNbrOfLinks = 5;
+        public const int maxNbrOfLinks = 5; // should be >= 1
 
         public const string filesDirectory = "../../files";
         public const string filesPrefix = "file_";

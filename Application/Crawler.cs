@@ -8,6 +8,7 @@ namespace Application
 {
     class Crawler
     {
+        private int currentFileIndex;
         public string Seed { get; set; }
         public int MaxNbrOfLinks { get; set; }
         public NetworkCredential Credentials { get; set; }
@@ -16,52 +17,43 @@ namespace Application
             Seed = seed;
             MaxNbrOfLinks = maxNbrOfLinks;
             Credentials = null;
-            WebRequest.DefaultWebProxy = null;
+            currentFileIndex = 0;
         }
 
         public void Crawl()
         {
             using (WebClient wc = new WebClient())
             {
-                if (Credentials != null)
-                {
-                    wc.Proxy = new WebProxy(Config.proxyIp, Config.proxyPort);
-                    wc.Proxy.Credentials = Credentials;
-                }
+                SetProxy(wc);
 
                 HashSet<string> visited = new HashSet<string>();
                 Queue<string> queue = new Queue<string>();
 
-                int counter = 1;
+                int counter = 0;
                 string url = Seed;
                 visited.Add(url);
                 queue.Enqueue(url);
+                counter++;
 
-                while (counter <= MaxNbrOfLinks && queue.Count > 0)
+                while (queue.Count > 0)
                 {
                     url = queue.Dequeue();
 
-                    string page = Download(wc, url, counter);
-                    counter++;
+                    string page = Download(wc, url);
 
                     foreach (LinkItem link in LinkFinder.Find(page))
                     {
                         string newUrl = GetNewUrl(url, link.Href);
+
+                        if (counter >= MaxNbrOfLinks) break;
                         if (visited.Contains(newUrl)) continue;
 
                         visited.Add(newUrl);
                         queue.Enqueue(newUrl);
+                        counter++;
                     }
                 }
             }
-        }
-
-        private string Download(WebClient wc, string url, int counter)
-        {
-            string page = wc.DownloadString(url);
-            string filePath = string.Format("{0}/{1}{2}.html", Config.filesDirectory, Config.filesPrefix, counter);
-            File.WriteAllText(filePath, page);
-            return page;
         }
 
         private string GetNewUrl(string url, string link)
@@ -76,7 +68,7 @@ namespace Application
                 }
             }
 
-            if(newUrl == null)
+            if (newUrl == null)
             {
                 newUrl = url;
                 if (!link.StartsWith("/")) newUrl += "/";
@@ -84,6 +76,27 @@ namespace Application
             }
 
             return newUrl;
+        }
+
+        private string Download(WebClient wc, string url)
+        {
+            string page = wc.DownloadString(url);
+            string filePath = string.Format("{0}/{1}{2}.html", Config.filesDirectory, Config.filesPrefix, currentFileIndex);
+            File.WriteAllText(filePath, page);
+            return page;
+        }
+
+        private void SetProxy(WebClient wc)
+        {
+            if (Credentials != null)
+            {
+                wc.Proxy = new WebProxy(Config.proxyIp, Config.proxyPort);
+                wc.Proxy.Credentials = Credentials;
+            }
+            else
+            {
+                WebRequest.DefaultWebProxy = null;
+            }
         }
 
         public void RunTest()
@@ -95,9 +108,13 @@ namespace Application
                     wc.Proxy = new WebProxy(Config.proxyIp, Config.proxyPort);
                     wc.Proxy.Credentials = Credentials;
                 }
+                else
+                {
+                    WebRequest.DefaultWebProxy = null;
+                }
 
                 string page = wc.DownloadString(Seed);
-                string file = Config.filesDirectory + "/f.html";
+                string file = Config.filesDirectory + "/test.html";
                 File.WriteAllText(file, page);
 
                 foreach (LinkItem i in LinkFinder.Find(page))
