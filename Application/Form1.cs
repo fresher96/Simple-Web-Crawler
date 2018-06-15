@@ -53,11 +53,11 @@ namespace Application
             }
 
             crawler.DownloadingEvent += new Crawler.DownloadingEventHandler(crawler_Downloading);
-            int errors = crawler.Crawl();
-
+            crawler.Crawl();
 
             string msg = "Finished crawling\r\n";
-            msg += string.Format("couldn't download {0} pages", errors);
+            msg += string.Format("couldn't download {0} pages\r\n", crawler.NoOfErrors);
+            msg += string.Format("from a total of {0} pages", crawler.CurrentFileIndex);
             MessageBox.Show(msg, "Notification");
         }
 

@@ -8,22 +8,29 @@ namespace Application
 {
     public class Crawler
     {
-        public int currentFileIndex;
-        public int noOfErrors;
+        #region standard stuff
+
+        private int currentFileIndex;
+        private int noOfErrors;
+        public int CurrentFileIndex { get { return currentFileIndex; } }
+        public int NoOfErrors { get { return noOfErrors; } }
         public string Seed { get; set; }
         public int MaxNbrOfLinks { get; set; }
         public NetworkCredential Credentials { get; set; }
+        public string FilesPrefix { get; set; }
         public Crawler(string seed, int maxNbrOfLinks)
         {
             Seed = seed;
             MaxNbrOfLinks = maxNbrOfLinks;
             Credentials = null;
-            currentFileIndex = 0;
+            FilesPrefix = "file_";
         }
 
+        #endregion
 
-        public int Crawl()
+        public void Crawl()
         {
+            currentFileIndex = 0;
             noOfErrors = 0;
             using (WebClient wc = new WebClient())
             {
@@ -58,9 +65,9 @@ namespace Application
                     }
                 }
             }
-
-            return noOfErrors;
         }
+
+        #region helper methods
 
         private string GetNewUrl(string url, string link)
         {
@@ -101,7 +108,7 @@ namespace Application
                 if (!contentType.StartsWith("text/html")) throw new Exception();
                 
                 page = Encoding.UTF8.GetString(data);
-                string filePath = string.Format("{0}/{1}{2}.html", Config.filesDirectory, Config.filesPrefix, currentFileIndex++);
+                string filePath = string.Format("{0}/{1}{2}.html", Config.filesDirectory, FilesPrefix, currentFileIndex);
                 File.WriteAllText(filePath, page);
             }
             catch (Exception)
@@ -109,13 +116,8 @@ namespace Application
                 noOfErrors++;
             }
 
+            currentFileIndex++;
             return page;
-        }
-
-        protected void OnDownload(DownloadingEventArgs e)
-        {
-            if (DownloadingEvent != null)
-                DownloadingEvent(this, e);
         }
 
         private void SetProxy(WebClient wc)
@@ -130,6 +132,8 @@ namespace Application
                 WebRequest.DefaultWebProxy = null;
             }
         }
+
+        #endregion
 
         public void RunTest()
         {
@@ -156,10 +160,15 @@ namespace Application
             }
         }
 
+        #region DownloadingEvent stuff
 
-        /// <summary>
-        /// DownloadingEvent definitions
-        /// </summary>
+        public delegate void DownloadingEventHandler(object sender, DownloadingEventArgs e);
+        public event DownloadingEventHandler DownloadingEvent;
+        protected void OnDownload(DownloadingEventArgs e)
+        {
+            if (DownloadingEvent != null)
+                DownloadingEvent(this, e);
+        }
         public class DownloadingEventArgs : EventArgs
         {
             public DownloadingEventArgs(string url)
@@ -168,8 +177,8 @@ namespace Application
             }
             public string Url { get; }
         }
-        public delegate void DownloadingEventHandler(object sender, DownloadingEventArgs e);
-        public event DownloadingEventHandler DownloadingEvent;
+
+        #endregion
     }
 
 }

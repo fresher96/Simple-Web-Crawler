@@ -15,7 +15,7 @@ namespace Application
         public const int maxNbrOfLinks = 8; // should be >= 1
 
         public const string filesDirectory = "../../files";
-        public const string filesPrefix = "file_";
+        public const string filesPrefix = "eclass_";
 
         public const string proxyIp = "172.25.1.152";
         public const int proxyPort = 8080;
