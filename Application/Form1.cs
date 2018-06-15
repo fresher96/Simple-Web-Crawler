@@ -25,7 +25,7 @@ namespace Application
             txtNbr.Text = Config.maxNbrOfLinks.ToString();
             txtUserName.Text = Config.proxyUserName;
             txtPassword.Text = Config.proxyPassword;
-            fileCounter = 0;
+            txtPrefix.Text = Config.filesPrefix;
         }
 
         private void btnClear_Click(object sender, EventArgs e)
@@ -41,8 +41,8 @@ namespace Application
                 Directory.CreateDirectory(Config.filesDirectory);
             }
 
-
             Crawler crawler = new Crawler(txtSeed.Text, int.Parse(txtNbr.Text));
+            crawler.FilesPrefix = txtPrefix.Text;
             if(!chkProxy.Checked)
             {
                 crawler.Credentials = new System.Net.NetworkCredential
@@ -52,7 +52,9 @@ namespace Application
                 };
             }
 
+            fileCounter = 0;
             crawler.DownloadingEvent += new Crawler.DownloadingEventHandler(crawler_Downloading);
+            crawler.Crawl();
             crawler.Crawl();
 
             string msg = "Finished crawling\r\n";
@@ -63,7 +65,7 @@ namespace Application
 
         private void crawler_Downloading(object sender, Crawler.DownloadingEventArgs e)
         {
-            txtLog.Text += string.Format("\r\nDownloading {1}:\r\n{0}\r\n", e.Url, fileCounter++);
+            txtLog.AppendText(string.Format("\r\nDownloading {2}{1}:\r\n{0}\r\n", e.Url, fileCounter++, txtPrefix.Text));
         }
 
         private void chkProxy_CheckedChanged(object sender, EventArgs e)
